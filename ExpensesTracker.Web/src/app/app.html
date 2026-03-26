@@ -1,0 +1,75 @@
+<div class="wrap">
+  <header>
+    <h1>{{ title() }}</h1>
+    <p class="muted">Simple expenses tracker (Angular -> .NET API)</p>
+  </header>
+
+  <section class="card">
+    <h2>{{ editingId !== null ? 'Edit expense' : 'Add expense' }}</h2>
+
+    <form (ngSubmit)="submit()" class="form">
+      <label>
+        Date
+        <input type="date" name="date" required [(ngModel)]="formDate" />
+      </label>
+
+      <label>
+        Amount
+        <input type="number" name="amount" required step="0.01" [(ngModel)]="formAmount" />
+      </label>
+
+      <label>
+        Category
+        <input type="text" name="category" required [(ngModel)]="formCategory" placeholder="Food, Rent..." />
+      </label>
+
+      <label>
+        Description
+        <input type="text" name="description" [(ngModel)]="formDescription" placeholder="Optional note" />
+      </label>
+
+      <div class="actions">
+        <button type="submit" [disabled]="loading">
+          {{ editingId !== null ? 'Update' : 'Add' }}
+        </button>
+        <button type="button" class="secondary" (click)="cancelEdit()" *ngIf="editingId !== null" [disabled]="loading">
+          Cancel
+        </button>
+      </div>
+    </form>
+
+    <div class="error" *ngIf="errorMessage">{{ errorMessage }}</div>
+    <div class="loading" *ngIf="loading">Loading...</div>
+  </section>
+
+  <section class="card">
+    <h2>Expenses</h2>
+
+    <div *ngIf="expenses.length === 0 && !loading" class="muted">No expenses yet.</div>
+
+    <table class="table" *ngIf="expenses.length > 0">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th style="text-align:right">Amount</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of expenses">
+          <td>{{ e.date }}</td>
+          <td>{{ e.category }}</td>
+          <td>{{ e.description }}</td>
+          <td style="text-align:right">{{ e.amount | number:'1.2-2' }}</td>
+          <td class="row-actions">
+            <button type="button" (click)="edit(e)" [disabled]="loading">Edit</button>
+            <button type="button" class="danger" (click)="remove(e.id)" [disabled]="loading">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+</div>
+
