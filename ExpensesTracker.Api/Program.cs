@@ -1,4 +1,6 @@
 using ExpensesTracker.Api.Repositories;
+using Microsoft.EntityFrameworkCore;
+using ExpensesTracker.Api.Data;
 using ExpensesTracker.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,9 +20,12 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
 });
 
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 // DI
-builder.Services.AddSingleton<IExpenseRepository, InMemoryExpenseRepository>();
-builder.Services.AddSingleton<IExpenseService, ExpenseService>();
+builder.Services.AddScoped<IExpenseRepository, ExpenseRepository>();
+builder.Services.AddScoped<IExpenseService, ExpenseService>();
 
 // Controllers
 builder.Services.AddControllers();
