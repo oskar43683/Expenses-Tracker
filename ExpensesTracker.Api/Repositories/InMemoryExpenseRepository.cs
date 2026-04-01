@@ -1,18 +1,19 @@
 using ExpensesTracker.Api.Dtos;
+using ExpensesTracker.Api.Models;
 
 namespace ExpensesTracker.Api.Repositories;
 
 public class InMemoryExpenseRepository : IExpenseRepository
 {
     private readonly object _gate = new();
-    private readonly List<ExpenseDto> _expenses;
+    private readonly List<Expense> _expenses;
     private int _nextId;
 
     public InMemoryExpenseRepository()
     {
-        _expenses = new List<ExpenseDto>
+        _expenses = new List<Expense>
         {
-            new ExpenseDto
+            new Expense
             {
                 Id = 1,
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(-2)),
@@ -20,7 +21,7 @@ public class InMemoryExpenseRepository : IExpenseRepository
                 Description = "Coffee",
                 Category = "Food"
             },
-            new ExpenseDto
+            new Expense
             {
                 Id = 2,
                 Date = DateOnly.FromDateTime(DateTime.Today.AddDays(-1)),
@@ -33,79 +34,39 @@ public class InMemoryExpenseRepository : IExpenseRepository
         _nextId = _expenses.Max(x => x.Id) + 1;
     }
 
-    public Task<List<ExpenseDto>> GetAllAsync()
+    public Task<List<Expense>> GetAllAsync()
     {
         lock (_gate)
         {
-            // Return a copy so callers can't mutate internal state.
-            return Task.FromResult(_expenses
-                .OrderByDescending(e => e.Date)
-                .Select(e => new ExpenseDto
-                {
-                    Id = e.Id,
-                    Date = e.Date,
-                    Amount = e.Amount,
-                    Description = e.Description,
-                    Category = e.Category
-                })
-                .ToList());
+            return Task.FromResult(_expenses.OrderByDescending(e => e.Date).ToList());
         }
     }
 
-    public Task<ExpenseDto?> GetByIdAsync(int id)
+    public Task<Expense?> GetByIdAsync(int id)
     {
         lock (_gate)
         {
-            var found = _expenses.FirstOrDefault(e => e.Id == id);
-            return Task.FromResult(found is null
-                ? null
-                : new ExpenseDto
-                {
-                    Id = found.Id,
-                    Date = found.Date,
-                    Amount = found.Amount,
-                    Description = found.Description,
-                    Category = found.Category
-                });
+            return Task.FromResult(_expenses.FirstOrDefault(e => e.Id == id));
         }
     }
 
-    public Task<ExpenseDto> CreateAsync(CreateExpenseRequest request)
+    public Task<Expense> CreateAsync(Expense expense)
     {
         lock (_gate)
         {
-            var nowId = _nextId++;
-
-            var created = new ExpenseDto
-            {
-                Id = nowId,
-                Date = request.Date,
-                Amount = request.Amount,
-                Description = request.Description,
-                Category = request.Category
-            };
-
-            _expenses.Add(created);
-            return Task.FromResult(created);
+            expense.Id = _nextId++;
+            _expenses.Add(expense);
+            return Task.FromResult(expense);
         }
     }
 
-    public Task<bool> UpdateAsync(int id, UpdateExpenseRequest request)
+    public Task<bool> UpdateAsync(Expense expense)
     {
         lock (_gate)
         {
-            var idx = _expenses.FindIndex(e => e.Id == id);
+            var idx = _expenses.FindIndex(e => e.Id == expense.Id);
             if (idx < 0) return Task.FromResult(false);
-
-            _expenses[idx] = new ExpenseDto
-            {
-                Id = id,
-                Date = request.Date,
-                Amount = request.Amount,
-                Description = request.Description,
-                Category = request.Category
-            };
-
+            _expenses[idx] = expense;
             return Task.FromResult(true);
         }
     }
