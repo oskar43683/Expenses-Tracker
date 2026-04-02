@@ -1,7 +1,7 @@
 # Expenses-Tracker
 
 Simple starter template:
-- ASP.NET Core Web API backend (in-memory CRUD)
+- ASP.NET Core Web API backend (CRUD with SQL Server / EF Core)
 - Angular frontend (CRUD UI)
 
 ## Run
@@ -34,5 +34,7 @@ Base: `http://localhost:5000/api`
 
 ## Notes
 
-- Expenses are stored in memory, so they reset when you restart the API.
+- Expenses are stored in a SQL Server database using EF Core (DbContext).
+- You can inspect or manage the database using SSMS (SQL Server Management Studio) if needed.
+- Make sure the connection string in appsettings.json matches your local SQL Server instance.
 - If you change the API port, update `src/app/services/expenses.service.ts` (`API_BASE_URL`).
