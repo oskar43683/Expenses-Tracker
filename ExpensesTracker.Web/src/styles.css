@@ -1,1 +1,162 @@
-/* You can add global styles to this file, and also import other style files */
+/* Theme: dark = gradient cards on dark page; light = white cards on green gradient page */
+:root,
+[data-theme='dark'] {
+  --font-sans: "DM Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --page-bg: #0f1419;
+  --page-bg-attachment: scroll;
+
+  --color-surface: #ffffff;
+  --color-border: #e2e8e0;
+  --color-border-strong: #cbd5e1;
+
+  --color-hero-text: #f8fafc;
+  --color-hero-muted: #94a3b8;
+
+  --color-text: #0f172a;
+  --color-text-muted: #475569;
+  --color-text-subtle: #64748b;
+
+  --color-primary: #0f766e;
+  --color-primary-hover: #2dd4bf;
+  --color-primary-active: #115e59;
+  --color-on-primary: #ffffff;
+
+  --ink-in-input: #0f2918;
+
+  --card-bg: linear-gradient(155deg, #0a1f14 0%, #134e2f 42%, #0c3020 100%);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-fg: #f8fafc;
+  --card-fg-muted: rgba(248, 250, 252, 0.78);
+  --card-optional: rgba(248, 250, 252, 0.62);
+
+  --card-input-bg: #f1f5f9;
+  --card-input-border: rgba(15, 23, 42, 0.18);
+  --card-input-border-hover: rgba(15, 23, 42, 0.28);
+  --card-input-focus: #0f766e;
+  --card-input-placeholder: #64748b;
+  --card-input-suffix: #3d5c4a;
+
+  --table-header-fg: rgba(248, 250, 252, 0.88);
+  --table-header-bg: rgba(0, 0, 0, 0.22);
+  --table-divider: rgba(255, 255, 255, 0.12);
+  --table-row-hover: rgba(255, 255, 255, 0.06);
+
+  --pill-bg: rgba(255, 255, 255, 0.16);
+  --pill-fg: #ecfdf5;
+
+  --amount-currency: rgba(248, 250, 252, 0.72);
+
+  --btn-secondary-bg: rgba(255, 255, 255, 0.1);
+  --btn-secondary-border: rgba(255, 255, 255, 0.35);
+  --btn-secondary-fg: var(--card-fg);
+  --btn-secondary-bg-hover: rgba(255, 255, 255, 0.18);
+  --btn-secondary-border-hover: rgba(255, 255, 255, 0.45);
+
+  --btn-row-bg: rgba(255, 255, 255, 0.12);
+  --btn-row-border: rgba(255, 255, 255, 0.28);
+  --btn-row-bg-hover: rgba(255, 255, 255, 0.22);
+  --btn-row-border-hover: rgba(255, 255, 255, 0.4);
+
+  --btn-primary-bg: #022c22;
+  --btn-primary-border: #011f18;
+  --btn-primary-fg: #ecfdf5;
+  --btn-primary-bg-hover: #064032;
+  --btn-primary-border-hover: #022c22;
+  --btn-primary-bg-active: #011a14;
+  --btn-primary-border-active: #01140f;
+  --btn-primary-focus-ring: #a7f3d0;
+
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --color-danger-bg: #fef2f2;
+  --color-danger-border: #fecaca;
+  --color-danger-text: #991b1b;
+  --color-danger-hover-bg: #fee2e2;
+
+  --color-error-text: #b91c1c;
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fecaca;
+}
+
+[data-theme='light'] {
+  --page-bg: linear-gradient(155deg, #0a1f14 0%, #134e2f 42%, #0c3020 100%);
+  --page-bg-attachment: fixed;
+
+  --color-hero-text: #ecfdf5;
+  --color-hero-muted: rgba(236, 253, 245, 0.88);
+
+  --card-bg: #ffffff;
+  --card-border: rgba(10, 41, 24, 0.12);
+  --card-fg: #0a2918;
+  --card-fg-muted: rgba(10, 41, 24, 0.72);
+  --card-optional: rgba(10, 41, 24, 0.6);
+
+  --card-input-bg: #f8fafc;
+  --card-input-border: rgba(10, 41, 24, 0.18);
+  --card-input-border-hover: rgba(10, 41, 24, 0.28);
+  --card-input-focus: #0f766e;
+  --card-input-placeholder: #5c7268;
+  --card-input-suffix: #3d5c4a;
+
+  --table-header-fg: rgba(10, 41, 24, 0.8);
+  --table-header-bg: linear-gradient(to bottom, #f1f5f9, #ffffff);
+  --table-divider: #e2e8e0;
+  --table-row-hover: rgba(15, 118, 110, 0.07);
+
+  --pill-bg: rgba(15, 118, 110, 0.14);
+  --pill-fg: #115e59;
+
+  --amount-currency: rgba(10, 41, 24, 0.65);
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-border: rgba(10, 41, 24, 0.25);
+  --btn-secondary-fg: #0a2918;
+  --btn-secondary-bg-hover: #f1f5f9;
+  --btn-secondary-border-hover: rgba(10, 41, 24, 0.4);
+
+  --btn-row-bg: #f1f5f9;
+  --btn-row-border: #cbd5e1;
+  --btn-row-bg-hover: #e2e8f0;
+  --btn-row-border-hover: #94a3b8;
+
+  --btn-primary-bg: #064e3b;
+  --btn-primary-border: #052e26;
+  --btn-primary-fg: #ecfdf5;
+  --btn-primary-bg-hover: #047857;
+  --btn-primary-border-hover: #064e3b;
+  --btn-primary-bg-active: #022c22;
+  --btn-primary-border-active: #011f18;
+  --btn-primary-focus-ring: #0d9488;
+
+  --shadow-md: 0 8px 28px rgba(0, 0, 0, 0.18), 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text);
+  background: var(--page-bg);
+  background-attachment: var(--page-bg-attachment);
+  min-height: 100vh;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-primary-hover);
+  outline-offset: 2px;
+}
