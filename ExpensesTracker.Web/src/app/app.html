@@ -133,7 +133,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let e of filteredExpenses">
+          <tr *ngFor="let e of filteredExpenses; let i = index" [class.new-item]="i === 0 && highlightLast" [class.removing]="deleteId === e.id && isDeleting"
+>
             <td>
               <time [attr.datetime]="e.date">{{ formatExpenseDate(e.date) }}</time>
             </td>
@@ -151,4 +152,24 @@
       </table>
     </div>
   </section>
+</div>
+<div class="modal-backdrop" *ngIf="deleteId !== null">
+  <div class="modal">
+    <h3>Delete expense?</h3>
+    <p>This action cannot be undone.</p>
+
+    <div class="modal-actions">
+      <button class="secondary" (click)="deleteId = null">
+        Cancel
+      </button>
+
+      <button 
+        class="danger" 
+        (click)="confirmDelete()" 
+        [disabled]="isDeleting"
+      >
+        {{ isDeleting ? 'Deleting...' : 'Delete' }}
+      </button>
+    </div>
+  </div>
 </div>

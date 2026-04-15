@@ -78,6 +78,9 @@ export class App implements OnInit {
   public formAmount: number = 0;
   public formDescription: string = '';
   public formCategory: string = '';
+  highlightLast = false;
+  deleteId: number | null = null;
+  isDeleting = false;
 
   constructor(
     @Inject(DOCUMENT) private readonly document: Document,
@@ -218,6 +221,11 @@ export class App implements OnInit {
       }
       this.cancelEdit();
       await this.refresh();
+      this.highlightLast = true;
+      setTimeout(() => {
+      this.highlightLast = false;
+      }, 1000);
+      
     } catch {
       this.errorMessage = 'Save failed. Check the API response.';
     } finally {
@@ -241,18 +249,24 @@ export class App implements OnInit {
     this.formCategory = '';
   }
 
-  public async remove(id: number): Promise<void> {
-    if (!confirm('Delete this expense?')) return;
+  public remove(id: number): void {
+  this.deleteId = id;
+}
 
-    this.loading = true;
-    this.errorMessage = null;
-    try {
-      await firstValueFrom(this.expensesService.delete(id));
-      await this.refresh();
-    } catch {
-      this.errorMessage = 'Delete failed.';
-    } finally {
-      this.loading = false;
-    }
+public async confirmDelete(): Promise<void> {
+  if (this.deleteId === null) return;
+
+  this.isDeleting = true;
+  this.errorMessage = null;
+
+  try {
+    await firstValueFrom(this.expensesService.delete(this.deleteId));
+    await this.refresh();
+  } catch {
+    this.errorMessage = 'Delete failed.';
+  } finally {
+    this.isDeleting = false;
+    this.deleteId = null;
   }
+}
 }

@@ -160,3 +160,29 @@ body {
   outline: 2px solid var(--color-primary-hover);
   outline-offset: 2px;
 }
+
+.new-item {
+  animation: highlightFade 1s ease, popIn 0.3s ease;
+}
+
+@keyframes highlightFade {
+  0% {
+    background: rgba(15, 118, 110, 0.4);
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+@keyframes popIn {
+  0% {
+    transform: scale(0.97);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+
